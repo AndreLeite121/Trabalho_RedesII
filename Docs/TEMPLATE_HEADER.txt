@@ -1,0 +1,9 @@
+"""
+Trabalho 2 – Redes de Computadores II
+Disciplina: Redes II
+Professor: Alessandro Vivas Andrade
+Autores: Lavínia Charrua, André Leite, Iasmin Torres
+Exercício: [NUMERO] – [NOME DO EXERCÍCIO]
+Descrição: [Breve descrição do que o script faz]
+Data: YYYY-MM-DD
+"""
