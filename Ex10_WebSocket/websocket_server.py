@@ -47,9 +47,9 @@ async def broadcast(message, sender_websocket):
             tasks.append(client.send(formatted_message))
         
         if tasks:
-            await asyncio.wait(tasks)
+            await asyncio.gather(*tasks)
 
-async def chat_handler(websocket, path):
+async def chat_handler(websocket):
     """
     Gerencia a conexão de cada cliente.
     """
