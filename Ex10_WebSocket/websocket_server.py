@@ -66,27 +66,28 @@ async def chat_handler(websocket, path):
     finally:
         await unregister(websocket)
 
-def main():
+# ... (todo o código de register, unregister, broadcast, chat_handler) ...
+# ... (deve terminar na linha 62, "finally: await unregister(websocket)") ...
+
+
+async def main():
     """
-    Inicia o servidor WebSocket.
+    Inicia o servidor WebSocket (versão async).
     """
     HOST = '0.0.0.0'
     PORT = 8765 # Porta padrão
     
-    start_server = websockets.serve(chat_handler, HOST, PORT)
-    
     logging.info(f"Servidor WebSocket escutando em ws://{HOST}:{PORT}...")
     
-    loop = asyncio.get_event_loop()
-    loop.run_until_complete(start_server)
-    
-    try:
-        loop.run_forever()
-    except KeyboardInterrupt:
-        print("\nServidor encerrando...")
-    finally:
-        loop.close()
-        logging.info("Servidor desligado.")
+    # Inicia o servidor e o mantém rodando indefinidamente
+    # 'websockets.serve' é um gerenciador de contexto assíncrono
+    async with websockets.serve(chat_handler, HOST, PORT):
+        await asyncio.Future()  # Executa para sempre (como loop.run_forever())
 
 if __name__ == "__main__":
-    main()
+    try:
+        # asyncio.run() cuida de criar, rodar e fechar o loop
+        asyncio.run(main())
+    except KeyboardInterrupt:
+        print("\nServidor encerrando...")
+        logging.info("Servidor desligado.")
