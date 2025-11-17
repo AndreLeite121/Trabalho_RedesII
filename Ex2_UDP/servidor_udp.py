@@ -17,23 +17,17 @@ PORT = 6000       # Porta especificada no exercício
 BUFFER_SIZE = 65535 # Tamanho máximo de um datagrama UDP (aprox. 64KB)
 
 def main():
-    """
-    Função principal para configurar e rodar o servidor Echo UDP.
-    """
-    # Cria o socket UDP (AF_INET para IPv4, SOCK_DGRAM para UDP)
     with socket.socket(socket.AF_INET, socket.SOCK_DGRAM) as sock:
         sock.bind((HOST, PORT))
         print(f"Servidor UDP Echo escutando em {HOST}:{PORT}...")
         
         while True:
             try:
-                # Recebe dados E o endereço do remetente
                 data, addr = sock.recvfrom(BUFFER_SIZE)
                 
                 msg_recebida = data.decode('utf-8')
                 print(f"Mensagem recebida de {addr}: {msg_recebida}")
                 
-                # Envia a mesma mensagem de volta (eco)
                 sock.sendto(data, addr)
                 print(f"Eco enviado para {addr}")
 

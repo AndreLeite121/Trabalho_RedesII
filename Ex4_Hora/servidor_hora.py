@@ -18,7 +18,6 @@ from datetime import datetime
 HOST = '0.0.0.0'
 PORT = 7000       # Porta especificada no exercício
 
-# Configuração do logging (requisito)
 logging.basicConfig(
     level=logging.INFO,
     format='%(asctime)s - %(message)s',
@@ -30,9 +29,7 @@ logging.basicConfig(
 )
 
 def handle_client(conn, addr):
-    """
-    Função executada em uma thread para cada cliente.
-    """
+
     try:
         logging.info(f"Solicitação recebida de {addr}")
         
@@ -51,9 +48,6 @@ def handle_client(conn, addr):
         conn.close()
 
 def main():
-    """
-    Função principal: aceita clientes e dispara threads.
-    """
     with socket.socket(socket.AF_INET, socket.SOCK_STREAM) as sock:
         sock.setsockopt(socket.SOL_SOCKET, socket.SO_REUSEADDR, 1)
         sock.bind((HOST, PORT))
@@ -65,7 +59,6 @@ def main():
             try:
                 conn, addr = sock.accept()
                 
-                # Cria uma nova thread para atender o cliente
                 client_thread = threading.Thread(
                     target=handle_client,
                     args=(conn, addr),

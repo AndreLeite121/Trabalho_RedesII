@@ -12,13 +12,10 @@ Data: 2025-11-13
 
 import socket
 
-HOST = '127.0.0.1'  # Endereço do servidor (localhost)
+HOST = '127.0.0.1'  # Endereço do servidor
 PORT = 5000         # Porta do servidor
 
 def main():
-    """
-    Função principal para conectar e interagir com o servidor TCP.
-    """
     with socket.socket(socket.AF_INET, socket.SOCK_STREAM) as sock:
         try:
             sock.connect((HOST, PORT))
@@ -26,7 +23,6 @@ def main():
             
             message = input("Digite a mensagem para enviar: ")
             
-            # Garante que a mensagem não seja vazia (requisito)
             if not message:
                 print("Mensagem vazia. Encerrando.")
                 return
@@ -38,7 +34,7 @@ def main():
             print(f"Resposta do servidor: {data.decode('utf-8')}")
 
         except ConnectionRefusedError:
-            print(f"Erro: Conexão recusada. O servidor está rodando?")
+            print(f"Erro: Conexão recusada. O servidor está on?")
         except Exception as e:
             print(f"Ocorreu um erro: {e}")
 

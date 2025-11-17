@@ -16,9 +16,6 @@ HOST = '127.0.0.1'  # Endereço do servidor
 PORT = 7000         # Porta do servidor
 
 def main():
-    """
-    Conecta, recebe a hora e imprime.
-    """
     try:
         with socket.socket(socket.AF_INET, socket.SOCK_STREAM) as sock:
             sock.connect((HOST, PORT))

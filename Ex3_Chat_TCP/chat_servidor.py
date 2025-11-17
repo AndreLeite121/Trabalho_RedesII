@@ -17,10 +17,6 @@ PORT = 5001
 clientes = [] # Lista para manter os sockets dos clientes
 
 def handle_client(conn_origem, addr_origem, conn_destino):
-    """
-    Função executada em thread para cada cliente.
-    Recebe mensagens de 'conn_origem' e as envia para 'conn_destino'.
-    """
     print(f"[CHAT] Cliente {addr_origem} conectado.")
     try:
         while True:
@@ -29,7 +25,6 @@ def handle_client(conn_origem, addr_origem, conn_destino):
                 print(f"[CHAT] Cliente {addr_origem} desconectou.")
                 break
             
-            # Tenta retransmitir a mensagem para o outro cliente
             if conn_destino:
                 try:
                     conn_destino.sendall(data)
@@ -41,7 +36,6 @@ def handle_client(conn_origem, addr_origem, conn_destino):
         print(f"[CHAT] Conexão com {addr_origem} perdida.")
     finally:
         conn_origem.close()
-        # Se um cliente sair, fecha o outro para este exercício
         if conn_destino:
             conn_destino.close()
 
@@ -74,7 +68,6 @@ def main():
         thread1.start()
         thread2.start()
         
-        # Mantém a thread principal viva enquanto as threads de cliente rodam
         thread1.join()
         thread2.join()
         print("Chat encerrado.")

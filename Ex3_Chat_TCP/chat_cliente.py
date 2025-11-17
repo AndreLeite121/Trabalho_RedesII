@@ -18,9 +18,6 @@ import sys
 chat_ativo = True
 
 def receive_messages(sock):
-    """
-    Thread para receber mensagens do servidor e exibi-las.
-    """
     global chat_ativo
     while chat_ativo:
         try:
@@ -30,7 +27,6 @@ def receive_messages(sock):
                 chat_ativo = False
                 break
             
-            # Limpa a linha atual e imprime a msg recebida
             sys.stdout.write('\r' + ' ' * 20 + '\r') 
             print(f"Outro: {data.decode('utf-8')}")
             sys.stdout.write('Você: ') # Reescreve o prompt
@@ -43,9 +39,6 @@ def receive_messages(sock):
             break
 
 def send_messages(sock):
-    """
-    Função (na thread principal) para enviar mensagens.
-    """
     global chat_ativo
     while chat_ativo:
         try:
@@ -56,7 +49,7 @@ def send_messages(sock):
                 
             sock.sendall(message.encode('utf-8'))
             
-            if message.lower() == 'sair': # Comando de saída
+            if message.lower() == 'sair':
                 print("Encerrando...")
                 chat_ativo = False
                 break
@@ -84,13 +77,11 @@ def main():
             print(f"Não foi possível conectar ao servidor: {e}")
             return
 
-        # Cria e inicia a thread de recebimento
         recv_thread = threading.Thread(target=receive_messages, 
                                        args=(sock,), 
                                        daemon=True)
         recv_thread.start()
         
-        # Usa a thread principal para enviar mensagens
         send_messages(sock)
         print("Desconectado.")
 
